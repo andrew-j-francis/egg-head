@@ -1,0 +1,28 @@
+html, body {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	color: lightgray;
+	background: #101119;
+	margin: 0;
+	padding: 8px;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+button{
+	padding: .5rem;
+	border-radius: 8px;
+	background: hsl(235, 9%, 29%);
+	color: lightgray;
+	font-size: large;
+	border: none;
+}
+
+button:hover{
+	background: hsl(235, 9%, 20%);
+	border: none;
+}
