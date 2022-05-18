@@ -1,3 +1,12 @@
+:root{
+	--background: hsl(233, 22%, 8%);
+	--button-background: hsl(235, 9%, 29%);
+	--button-background-highlight: hsl(235, 9%, 20%);
+	--link-color: hsl(288, 11%, 65%);
+	--link-color-visited: hsl(288, 11%, 45%);
+	--link-color-hover: hsl(288, 11%, 75%);
+}
+
 html, body {
 	position: relative;
 	width: 100%;
@@ -6,23 +15,35 @@ html, body {
 
 body {
 	color: lightgray;
-	background: #101119;
+	background: var(--background);
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-button{
-	padding: .5rem;
+button {
+	padding: 1rem;
 	border-radius: 8px;
-	background: hsl(235, 9%, 29%);
+	background: var(--button-background);
 	color: lightgray;
 	font-size: large;
 	border: none;
 }
 
-button:hover{
-	background: hsl(235, 9%, 20%);
+button:hover {
+	background: var(--button-background-highlight);
 	border: none;
+}
+
+a:link {
+	color: var(--link-color);
+}
+
+a:visited{
+	color: var(--link-color-visited);
+}
+
+a:hover{
+	color: var(--link-color-hover);
 }
