@@ -1,4 +1,27 @@
 <script lang="ts">
+    import {shortcut} from './shortcut.js'
+
+    let count = 0;
+
+    $: tasks = [
+        {
+            index: "1",
+            name: "task 1",
+            status: "In Progress",
+            isFive: false,
+        }
+    ];
+
+    function createTask() {
+        tasks.push(
+            {
+                index: "1",
+                name: "task 1",
+                status: "In Progress",
+                isFive: false,
+            }
+        )
+    }
 </script>
 
 <style>
@@ -10,7 +33,7 @@
     }
 
     .list-container {
-
+        margin: 2rem;
     }
 
     table {
@@ -22,19 +45,6 @@
     th {
         text-align: left;
         border: 1px solid lightgray;
-    }
-
-    tr {
-    }
-
-    input[type=text] {
-        width: 100%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
     }
 
     tr:hover {
@@ -50,27 +60,15 @@
             <th>Status</th>
             <th>Five Minutes?</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Test Task Number One</td>
-            <td>In Progress</td>
-            <td>N</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Test Task Number One</td>
-            <td>In Progress</td>
-            <td>N</td>
-        </tr>
+        {#each tasks as task}
+            <tr>
+                <td>{task.index}</td>
+                <td>{task.name}</td>
+                <td>{task.status}</td>
+                <td>{task.isFive}</td>
+            </tr>
+        {/each}
     </table>
-
-    <form>
-        <label for="task_name">Task Name</label>
-        <input type="text" id="task_name">
-
-        <label for="five">Is five minutes or less?</label>
-        <input type="checkbox" id="five">
-
-        <button>Create</button>
-    </form>
 </div>
+
+<div use:shortcut={{control:true, code:'KeyN', callback: createTask}}>{count}</div>
