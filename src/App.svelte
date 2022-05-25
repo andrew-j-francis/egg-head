@@ -2,8 +2,9 @@
     import {shortcut} from './shortcut.js'
 
     let count = 0;
+    let inputCommand = "";
 
-    $: tasks = [
+    let tasks = [
         {
             index: "1",
             name: "task 1",
@@ -21,6 +22,8 @@
                 isFive: false,
             }
         )
+
+        tasks = tasks;
     }
 </script>
 
@@ -71,4 +74,8 @@
     </table>
 </div>
 
-<div use:shortcut={{control:true, code:'KeyN', callback: createTask}}>{count}</div>
+<div>
+    {inputCommand}
+</div>
+
+<div use:shortcut={{shift:true, code:'Semicolon', callback: () => createTask()}}></div>
