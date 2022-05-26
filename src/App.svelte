@@ -5,18 +5,16 @@
     let commandPromptValue = "";
     let commandPromptLabel = "";
 
+    let taskName = "";
+    let taskStatus = "";
+    let fiveMinutes = "";
+
     let tasks = [];
 
     function createTask() {
-        tasks.push(
-            {
-                index: "1",
-                name: "task 1",
-                status: "In Progress",
-                isFive: false,
-            }
-        )
-        tasks = tasks;
+        let commandArray = [];
+        commandArray = commandPromptValue.split('');
+        console.log(commandArray);
     }
 
     function closeCommandPrompt() {
@@ -33,10 +31,17 @@
         showCommandPrompt = true;
     }
 
+    function clearCommandPrompt() {
+        commandPromptValue = "";
+    }
+
     function handleCommandPromptKeyPress(event) {
         if (event.key == 'Enter') {
-            console.log(commandPromptValue);
-            closeCommandPrompt();
+            if (commandPromptValue.substring(0, 2) == ':n') {
+                createTask();
+            } else {
+                closeCommandPrompt();
+            }
         }
 
     }
