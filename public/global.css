@@ -5,6 +5,9 @@
     --link-color: hsl(288, 11%, 65%);
     --link-color-visited: hsl(288, 11%, 45%);
     --link-color-hover: hsl(288, 11%, 75%);
+    --text-color: lightgray;
+    --text-color-dark: darkgray;
+    --text-color-light: whitesmoke;
 }
 
 html, body {
