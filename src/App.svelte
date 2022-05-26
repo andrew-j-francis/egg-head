@@ -1,64 +1,63 @@
 <script lang="ts">
     import {shortcut} from './shortcut.js'
+    import CommandPrompt from "./CommandPrompt.svelte";
 
-    let showCommandPrompt = false;
-    let commandPromptValue = "";
-    let commandPromptLabel = "";
-
-    let taskName = "";
-    let taskStatus = "";
-    let fiveMinutes = "";
 
     let tasks = [];
 
-    function createTask() {
-        let commandArray = [];
-        commandArray = commandPromptValue.split('');
-        console.log(commandArray);
-    }
+    let selectedItemIndex = 0;
+    let listItems = [
+        {
+            name: "Item 1",
+            class: "selected-item"
+        },
+        {
+            name: "Item 2",
+            class: "item"
+        },
+        {
+            name: "Item 3",
+            class: "item"
+        }
+    ];
 
-    function closeCommandPrompt() {
-        showCommandPrompt = false;
-        commandPromptValue = "";
-    }
+    function moveSelectionDown() {
+        console.log("select Item");
+        listItems[selectedItemIndex].class = "item";
 
-    function openCommandPrompt() {
-        if (showCommandPrompt) {
-            closeCommandPrompt();
-            return;
+        if (selectedItemIndex + 1 >= listItems.length) {
+            selectedItemIndex = 0;
+        } else {
+            selectedItemIndex += 1;
         }
 
-        showCommandPrompt = true;
+        listItems[selectedItemIndex].class = "selected-item";
     }
 
-    function clearCommandPrompt() {
-        commandPromptValue = "";
-    }
+    function moveSelectionUp() {
+        console.log("select Item");
+        listItems[selectedItemIndex].class = "item";
 
-    function handleCommandPromptKeyPress(event) {
-        if (event.key == 'Enter') {
-            if (commandPromptValue.substring(0, 2) == ':n') {
-                createTask();
-            } else {
-                closeCommandPrompt();
-            }
+        if (selectedItemIndex - 1 < 0) {
+            selectedItemIndex = listItems.length - 1;
+        } else {
+            selectedItemIndex -= 1;
         }
 
+        listItems[selectedItemIndex].class = "selected-item";
     }
 
 </script>
 
 <style>
-
-    input[type=text] {
-        background: var(--button-background);
-        width: 90%;
-        border: none;
-        color: lightgray;
-        outline: none;
-        padding: .25rem;
-        margin: 1rem;
+    .selected-item {
+        color: blue;
     }
+
+    .item {
+        color: green;
+    }
+
 </style>
 
 <div class="list-container">
@@ -80,8 +79,11 @@
     </table>
 </div>
 
-{#if showCommandPrompt}
-    <input type="text" bind:value={commandPromptValue} on:keypress={handleCommandPromptKeyPress} autofocus>
-{/if}
+<CommandPrompt></CommandPrompt>
 
-<div use:shortcut={{control:true, code:'KeyC', callback: openCommandPrompt}}></div>
+<div use:shortcut={{code:'ArrowDown', callback:moveSelectionDown}}
+     use:shortcut={{code:'ArrowUp', callback:moveSelectionUp}}>
+    {#each listItems as item}
+        <div class={item.class}>{item.name}</div>
+    {/each}
+</div>
