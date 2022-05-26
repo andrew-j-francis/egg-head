@@ -1,17 +1,11 @@
 <script lang="ts">
     import {shortcut} from './shortcut.js'
 
-    let count = 0;
-    let inputCommand = "";
+    let showCommandPrompt = false;
+    let commandPromptValue = "";
+    let commandPromptLabel = "";
 
-    let tasks = [
-        {
-            index: "1",
-            name: "task 1",
-            status: "In Progress",
-            isFive: false,
-        }
-    ];
+    let tasks = [];
 
     function createTask() {
         tasks.push(
@@ -22,36 +16,43 @@
                 isFive: false,
             }
         )
-
         tasks = tasks;
     }
+
+    function closeCommandPrompt() {
+        showCommandPrompt = false;
+        commandPromptValue = "";
+    }
+
+    function openCommandPrompt() {
+        if (showCommandPrompt) {
+            closeCommandPrompt();
+            return;
+        }
+
+        showCommandPrompt = true;
+    }
+
+    function handleCommandPromptKeyPress(event) {
+        if (event.key == 'Enter') {
+            console.log(commandPromptValue);
+            closeCommandPrompt();
+        }
+
+    }
+
 </script>
 
 <style>
-    main {
-        text-align: center;
-        padding: 1em;
-        max-width: 240px;
-        margin: 0 auto;
-    }
 
-    .list-container {
-        margin: 2rem;
-    }
-
-    table {
-        border: 1px solid lightgray;
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th {
-        text-align: left;
-        border: 1px solid lightgray;
-    }
-
-    tr:hover {
-        background: gray;
+    input[type=text] {
+        background: var(--button-background);
+        width: 90%;
+        border: none;
+        color: lightgray;
+        outline: none;
+        padding: .25rem;
+        margin: 1rem;
     }
 </style>
 
@@ -74,8 +75,8 @@
     </table>
 </div>
 
-<div>
-    {inputCommand}
-</div>
+{#if showCommandPrompt}
+    <input type="text" bind:value={commandPromptValue} on:keypress={handleCommandPromptKeyPress} autofocus>
+{/if}
 
-<div use:shortcut={{shift:true, code:'Semicolon', callback: () => createTask()}}></div>
+<div use:shortcut={{control:true, code:'KeyC', callback: openCommandPrompt}}></div>

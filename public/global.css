@@ -48,7 +48,33 @@ a:hover {
     color: var(--link-color-hover);
 }
 
-input[type=text] {
+main {
+    text-align: center;
+    padding: 1em;
+    max-width: 240px;
+    margin: 0 auto;
+}
+
+.list-container {
+    margin: 2rem;
+}
+
+table {
+    border: 1px solid lightgray;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    border: 1px solid lightgray;
+}
+
+tr:hover {
+    background: gray;
+}
+
+/*input[type=text] {
     background: lightgray;
     width: 100%;
     padding: 12px 20px;
@@ -57,4 +83,4 @@ input[type=text] {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
+}*/
