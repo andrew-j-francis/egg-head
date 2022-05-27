@@ -1,32 +1,51 @@
 <script lang="ts">
-    import TextInput from "./TextInput.svelte";
-    import ListSelector from "./ListSelector.svelte";
+    import {shortcut} from './shortcut.js'
+    import {createEventDispatcher} from 'svelte';
+
+    const dispatch = createEventDispatcher();
 
     export let pages = [];
+    export let shift = false;
+    export let control = false;
+    export let key = '';
+
+    let showFlow = false;
+
     let currentPageIndex = 0;
-
-    let currentPage = pages[currentPageIndex];
-
+    $: currentPage = pages[currentPageIndex];
     let returnedValues = [];
 
 
     function handleComponentSubmit(event) {
-        console.log("Flow: handleSubmit");
-        console.log(event.detail.value);
-
         returnedValues.push(event.detail.value);
 
-
         if (returnedValues.length == pages.length) {
-            console.log(returnedValues);
-            //fire return event
+            dispatch('submit', {
+                value: returnedValues
+            });
+            resetFlow();
         } else {
-            currentPageIndex += 1;
-            currentPage = pages[currentPageIndex];
+            showFlow = false;
+            setTimeout(() => {
+                currentPageIndex += 1;
+                showFlow = true;
+            }, 0);
         }
+    }
+
+    function resetFlow() {
+        showFlow = false;
+        currentPageIndex = 0;
+        returnedValues = [];
     }
 
 </script>
 
-<svelte:component this={currentPage.component} {...currentPage.props}
-                  on:submit={handleComponentSubmit}></svelte:component>
+<div use:shortcut={{shift: shift, control: control, code:key, callback: () => showFlow= true}}>
+    {#if showFlow}
+        {currentPage.component.name}
+        {JSON.stringify(currentPage.props)}
+        <svelte:component this={currentPage.component} {...currentPage.props}
+                          on:submit={handleComponentSubmit}></svelte:component>
+    {/if}
+</div>

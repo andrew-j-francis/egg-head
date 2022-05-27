@@ -5,20 +5,36 @@
     import Flow from "./Flow.svelte";
 
     let tasks = [];
-    let showNewTaskFlow = false;
 
-    let createTaskPages = [
+    let createTaskFlowPages = [
         {
             component: TextInput,
-            props: {placeholder: "Test Place"}
+            props: {placeholder: "Task Name"}
         },
         {
             component: ListSelector,
             props: {
-                listItemNames: ["Item 1", "Item 2", "Item 3"]
+                listItemNames: ["New", "In Progress", "Done"]
+            }
+        },
+        {
+            component: ListSelector,
+            props: {
+                listItemNames: ["Yes", "No"]
             }
         }
     ];
+
+    function handleCreateTask(event) {
+        let returnValues = event.detail.value;
+
+        tasks = [...tasks, {
+            index: 1,
+            name: returnValues[0],
+            status: returnValues[1],
+            isFiveMinutes: returnValues[2],
+        }];
+    }
 </script>
 
 <style>
@@ -38,14 +54,10 @@
                 <td>{task.index}</td>
                 <td>{task.name}</td>
                 <td>{task.status}</td>
-                <td>{task.isFive}</td>
+                <td>{task.isFiveMinutes}</td>
             </tr>
         {/each}
     </table>
 </div>
 
-<div use:shortcut={{control:true, code:'KeyN', callback: () => showNewTaskFlow = true}}></div>
-
-{#if showNewTaskFlow}
-    <Flow pages={createTaskPages}></Flow>
-{/if}
+<Flow pages={createTaskFlowPages} shift={false} control={true} key="KeyN" on:submit={handleCreateTask}></Flow>

@@ -1,6 +1,6 @@
 <script lang="ts">
     import {shortcut} from './shortcut.js'
-    import {createEventDispatcher} from 'svelte';
+    import {createEventDispatcher, onMount} from 'svelte';
 
     const dispatch = createEventDispatcher();
     export let placeholder = "";
@@ -11,6 +11,10 @@
             value: textValue
         });
     }
+
+    onMount(() => {
+        textValue = "";
+    });
 </script>
 
 <style>

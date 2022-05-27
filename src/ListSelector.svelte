@@ -9,6 +9,8 @@
     let listItems = [];
 
     onMount(async () => {
+        console.log('Select on mount');
+        console.log(listItemNames);
         listItemNames.forEach((item, index) => {
             let className = "";
 
@@ -23,6 +25,7 @@
             }];
 
         });
+        console.log(listItems);
 
     });
 
