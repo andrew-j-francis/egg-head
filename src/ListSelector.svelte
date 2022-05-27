@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import {createEventDispatcher} from 'svelte';
     import {shortcut} from './shortcut.js'
     import {onMount} from "svelte";
@@ -51,9 +51,9 @@
         listItems[currentItemIndex].class = "selected-item";
     }
 
-    function selectListItem() {
-        dispatch('selected', {
-            selection: listItems[currentItemIndex].name
+    function handleSubmit() {
+        dispatch('submit', {
+            value: listItems[currentItemIndex].name
         });
     }
 
@@ -72,7 +72,7 @@
 
 <div use:shortcut={{code:'ArrowDown', callback:moveSelectionDown}}
      use:shortcut={{code:'ArrowUp', callback:moveSelectionUp}}
-     use:shortcut={{code:'Enter', callback:selectListItem}}>
+     use:shortcut={{code:'Enter', callback:handleSubmit}}>
     {#each listItems as item}
         <div class={item.class}>{item.name}</div>
     {/each}

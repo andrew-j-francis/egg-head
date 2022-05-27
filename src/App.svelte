@@ -1,15 +1,24 @@
 <script lang="ts">
     import {shortcut} from './shortcut.js'
+    import TextInput from "./TextInput.svelte";
     import ListSelector from "./ListSelector.svelte";
-    import CommandPrompt from "./CommandPrompt.svelte";
-
+    import Flow from "./Flow.svelte";
 
     let tasks = [];
-    let listItems = ["Item 1", "Item 2", "Item 3"];
+    let showNewTaskFlow = false;
 
-    function handleListSelection(event) {
-        console.log(event.detail.selection)
-    }
+    let createTaskPages = [
+        {
+            component: TextInput,
+            props: {placeholder: "Test Place"}
+        },
+        {
+            component: ListSelector,
+            props: {
+                listItemNames: ["Item 1", "Item 2", "Item 3"]
+            }
+        }
+    ];
 </script>
 
 <style>
@@ -35,6 +44,8 @@
     </table>
 </div>
 
-<CommandPrompt></CommandPrompt>
+<div use:shortcut={{control:true, code:'KeyN', callback: () => showNewTaskFlow = true}}></div>
 
-<ListSelector listItemNames={listItems} on:selected={handleListSelection}></ListSelector>
+{#if showNewTaskFlow}
+    <Flow pages={createTaskPages}></Flow>
+{/if}
