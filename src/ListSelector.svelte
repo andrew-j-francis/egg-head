@@ -4,8 +4,9 @@
     import {onMount} from "svelte";
 
     const dispatch = createEventDispatcher();
-    let currentItemIndex = 0;
     export let listItemNames = [];
+    export let label = "";
+    let currentItemIndex = 0;
     let listItems = [];
 
     onMount(async () => {
@@ -76,6 +77,9 @@
 <div use:shortcut={{code:'ArrowDown', callback:moveSelectionDown}}
      use:shortcut={{code:'ArrowUp', callback:moveSelectionUp}}
      use:shortcut={{code:'Enter', callback:handleSubmit}}>
+    <h4>
+        {label}
+    </h4>
     {#each listItems as item}
         <div class={item.class}>{item.name}</div>
     {/each}

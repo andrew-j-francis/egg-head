@@ -41,11 +41,17 @@
 
 </script>
 
+<style>
+    .flow-container {
+        margin: 2rem;
+    }
+</style>
+
 <div use:shortcut={{shift: shift, control: control, code:key, callback: () => showFlow= true}}>
     {#if showFlow}
-        {currentPage.component.name}
-        {JSON.stringify(currentPage.props)}
-        <svelte:component this={currentPage.component} {...currentPage.props}
-                          on:submit={handleComponentSubmit}></svelte:component>
+        <div class="flow-container">
+            <svelte:component this={currentPage.component} {...currentPage.props}
+                              on:submit={handleComponentSubmit}></svelte:component>
+        </div>
     {/if}
 </div>

@@ -4,6 +4,7 @@
 
     const dispatch = createEventDispatcher();
     export let placeholder = "";
+    export let label = "";
     let textValue = "";
 
     function handleSubmit() {
@@ -20,15 +21,17 @@
 <style>
     input[type=text] {
         background: var(--button-background);
-        width: 90%;
+        width: 100%;
         border: none;
         color: lightgray;
         outline: none;
         padding: .25rem;
-        margin: 1rem;
     }
 </style>
 
 <div use:shortcut={{code:'Enter', callback:handleSubmit}}>
-    <input type="text" bind:value={textValue} placeholder={placeholder} autofocus>
+    <h4>
+        <label for="text-input">{label}</label>
+    </h4>
+    <input id="text-input" type="text" bind:value={textValue} placeholder={placeholder} autofocus>
 </div>

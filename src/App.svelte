@@ -9,21 +9,25 @@
     let createTaskFlowPages = [
         {
             component: TextInput,
-            props: {placeholder: "Task Name"}
+            props: {placeholder: "Task Name", label: "Test Label"}
         },
         {
             component: ListSelector,
             props: {
-                listItemNames: ["New", "In Progress", "Done"]
+                listItemNames: ["New", "In Progress", "Done"],
+                label: "Status"
             }
         },
         {
             component: ListSelector,
             props: {
-                listItemNames: ["Yes", "No"]
+                listItemNames: ["Yes", "No"],
+                label: "Will this take less than 5 minutes?"
             }
         }
     ];
+
+    let editTaskFlowPages = [];
 
     function handleCreateTask(event) {
         let returnValues = event.detail.value;
@@ -38,6 +42,9 @@
 </script>
 
 <style>
+    .list-container {
+        margin: 2rem;
+    }
 
 </style>
 
@@ -59,5 +66,7 @@
         {/each}
     </table>
 </div>
+
+<hr>
 
 <Flow pages={createTaskFlowPages} shift={false} control={true} key="KeyN" on:submit={handleCreateTask}></Flow>
