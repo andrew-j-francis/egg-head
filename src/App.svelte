@@ -1,33 +1,15 @@
 <script lang="ts">
-    import {shortcut} from './shortcut.js'
-    import TextInput from "./TextInput.svelte";
-    import ListSelector from "./ListSelector.svelte";
-    import Flow from "./Flow.svelte";
+    import Table from "./Table.svelte";
+    import Modal from "./Modal.svelte";
 
-    let tasks = [];
-
-    let createTaskFlowPages = [
+    let tasks = [
         {
-            component: TextInput,
-            props: {placeholder: "Task Name", label: "Test Label"}
-        },
-        {
-            component: ListSelector,
-            props: {
-                listItemNames: ["New", "In Progress", "Done"],
-                label: "Status"
-            }
-        },
-        {
-            component: ListSelector,
-            props: {
-                listItemNames: ["Yes", "No"],
-                label: "Will this take less than 5 minutes?"
-            }
+            index: 1,
+            name: 'Test',
+            status: 'In Progress',
+            isFiveMinutes: 'True'
         }
     ];
-
-    let editTaskFlowPages = [];
 
     function handleCreateTask(event) {
         let returnValues = event.detail.value;
@@ -39,34 +21,16 @@
             isFiveMinutes: returnValues[2],
         }];
     }
-</script>
 
-<style>
-    .list-container {
-        margin: 2rem;
+    function openModal() {
+
     }
 
-</style>
+</script>
+<Modal></Modal>
 
-<div class="list-container">
-    <table>
-        <tr>
-            <th>#</th>
-            <th>Task Name</th>
-            <th>Status</th>
-            <th>Five Minutes?</th>
-        </tr>
-        {#each tasks as task}
-            <tr>
-                <td>{task.index}</td>
-                <td>{task.name}</td>
-                <td>{task.status}</td>
-                <td>{task.isFiveMinutes}</td>
-            </tr>
-        {/each}
-    </table>
-</div>
+<Table tasks={tasks}></Table>
+<button on:click={openModal}>Create Task</button>
+<button>Delete Task</button>
+<button>Edit Task</button>
 
-<hr>
-
-<Flow pages={createTaskFlowPages} shift={false} control={true} key="KeyN" on:submit={handleCreateTask}></Flow>
