@@ -6,6 +6,8 @@
     let taskFive = false;
     let taskStatus = "";
     let taskName = "";
+    let taskStartDate;
+    let taskEndDate;
 
     let tasks = [];
 
@@ -23,17 +25,30 @@
 
 </script>
 <Modal showModal={showTaskModal}>
-    <label for="task-name">Task Name </label>
-    <input id="task-name" type="text" bind:value={taskName}>
+    <form on:submit={handleCreateTask}>
 
-    <label for="status">Status</label>
-    <input id="status" type="text" bind:value={taskStatus}>
+        <label for="task-name">Task Name</label>
+        <input id="task-name" type="text" bind:value={taskName} required>
 
-    <label for="five">Is Five Minutes?</label>
-    <input id="five" type="checkbox" bind:value={taskFive}>
+        <label for="status">Status</label>
+        <select id="status" bind:value={taskStatus}>
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+        </select>
 
-    <button on:click={() => showTaskModal = false}>Cancel</button>
-    <button on:click={handleCreateTask}>Create</button>
+        <label for="start-date">Start Date</label>
+        <input id="start-date" type="date" bind:value={taskStartDate}>
+
+        <label for="end-date">End Date</label>
+        <input id="end-date" type="date" bind:value={taskEndDate}>
+
+        <label for="five">Is Five Minutes?</label>
+        <input id="five" type="checkbox" bind:checked={taskFive}>
+
+        <button on:click={() => showTaskModal = false}>Cancel</button>
+        <button type="submit">Create</button>
+    </form>
 </Modal>
 
 <Table tasks={tasks}></Table>
