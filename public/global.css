@@ -66,7 +66,7 @@ main {
 }
 
 
-/*input[type=text] {
+input[type=text] {
     background: lightgray;
     width: 100%;
     padding: 12px 20px;
@@ -75,4 +75,4 @@ main {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}*/
+}

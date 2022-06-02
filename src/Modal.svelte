@@ -1,9 +1,9 @@
 <script lang="ts">
-
+    export let showModal = false;
 </script>
 
 <style>
-    .modal {
+    .modal-container {
         position: fixed; /* Stay in place */
         z-index: 1; /* Sit on top */
         padding-top: 100px; /* Location of the box */
@@ -19,7 +19,7 @@
 
     /* Modal Content */
     .modal-content {
-        background-color: #fefefe;
+        background-color: var(--surface);
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
@@ -42,12 +42,12 @@
     }
 </style>
 
-<div id="myModal" class="modal">
+{#if showModal}
 
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Some text in the Modal..</p>
+    <div class="modal-container">
+        <div class="modal-content">
+            <slot></slot>
+        </div>
     </div>
 
-</div>
+{/if}

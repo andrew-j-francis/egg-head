@@ -2,6 +2,8 @@
     import Table from "./Table.svelte";
     import Modal from "./Modal.svelte";
 
+    let showCreateTaskModal = false;
+
     let tasks = [
         {
             index: 1,
@@ -22,15 +24,23 @@
         }];
     }
 
-    function openModal() {
-
-    }
-
 </script>
-<Modal></Modal>
+<Modal showModal={showCreateTaskModal}>
+    <label for="task-name">Task Name </label>
+    <input id="task-name" type="text">
+
+    <label for="status">Status</label>
+    <input id="status" type="text">
+
+    <label for="five">Is Five Minutes?</label>
+    <input id="five" type="checkbox">
+
+    <button on:click={() => showCreateTaskModal = false}>Cancel</button>
+    <button on:click={() => showCreateTaskModal = false}>Create</button>
+</Modal>
 
 <Table tasks={tasks}></Table>
-<button on:click={openModal}>Create Task</button>
+<button on:click={() => showCreateTaskModal = true}>Create Task</button>
 <button>Delete Task</button>
 <button>Edit Task</button>
 
