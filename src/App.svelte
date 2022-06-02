@@ -2,45 +2,41 @@
     import Table from "./Table.svelte";
     import Modal from "./Modal.svelte";
 
-    let showCreateTaskModal = false;
+    let showTaskModal = false;
+    let taskFive = false;
+    let taskStatus = "";
+    let taskName = "";
 
-    let tasks = [
-        {
-            index: 1,
-            name: 'Test',
-            status: 'In Progress',
-            isFiveMinutes: 'True'
-        }
-    ];
+    let tasks = [];
 
-    function handleCreateTask(event) {
-        let returnValues = event.detail.value;
+    function handleCreateTask() {
+        showTaskModal = false;
 
         tasks = [...tasks, {
             index: 1,
-            name: returnValues[0],
-            status: returnValues[1],
-            isFiveMinutes: returnValues[2],
+            name: taskName,
+            status: taskStatus,
+            isFiveMinutes: taskFive,
         }];
     }
 
+
 </script>
-<Modal showModal={showCreateTaskModal}>
+<Modal showModal={showTaskModal}>
     <label for="task-name">Task Name </label>
-    <input id="task-name" type="text">
+    <input id="task-name" type="text" bind:value={taskName}>
 
     <label for="status">Status</label>
-    <input id="status" type="text">
+    <input id="status" type="text" bind:value={taskStatus}>
 
     <label for="five">Is Five Minutes?</label>
-    <input id="five" type="checkbox">
+    <input id="five" type="checkbox" bind:value={taskFive}>
 
-    <button on:click={() => showCreateTaskModal = false}>Cancel</button>
-    <button on:click={() => showCreateTaskModal = false}>Create</button>
+    <button on:click={() => showTaskModal = false}>Cancel</button>
+    <button on:click={handleCreateTask}>Create</button>
 </Modal>
 
 <Table tasks={tasks}></Table>
-<button on:click={() => showCreateTaskModal = true}>Create Task</button>
-<button>Delete Task</button>
+<button on:click={() => showTaskModal = true}>Create Task</button>
 <button>Edit Task</button>
 
