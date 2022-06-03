@@ -1,5 +1,6 @@
 <script lang="ts">
-    export let tasks = [];
+    export let headers = [];
+    export let records = [];
 </script>
 
 <style>
@@ -29,17 +30,15 @@
 <div class="table-container">
     <table>
         <tr>
-            <th>#</th>
-            <th>Task Name</th>
-            <th>Status</th>
-            <th>Five Minutes?</th>
+            {#each headers as header}
+                <th>{header}</th>
+            {/each}
         </tr>
-        {#each tasks as task}
+        {#each records as record}
             <tr class="table-row">
-                <td>{task.index}</td>
-                <td>{task.name}</td>
-                <td>{task.status}</td>
-                <td>{task.isFiveMinutes}</td>
+                {#each Object.entries(record) as [header, value]}
+                    <td>{value}</td>
+                {/each}
             </tr>
         {/each}
     </table>

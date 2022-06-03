@@ -10,6 +10,7 @@
     let taskEndDate;
 
     let tasks = [];
+    let headers = ["#", "Name", "Status", "Five Minutes"];
 
     function handleCreateTask() {
         showTaskModal = false;
@@ -51,7 +52,7 @@
     </form>
 </Modal>
 
-<Table tasks={tasks}></Table>
+<Table records={tasks} headers={headers}></Table>
 <button on:click={() => showTaskModal = true}>Create Task</button>
 <button>Edit Task</button>
 
