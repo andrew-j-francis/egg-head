@@ -1,6 +1,8 @@
 <script lang="ts">
     export let headers = [];
     export let records = [];
+
+
 </script>
 
 <style>
