@@ -2,6 +2,8 @@
     import Table from "./Table.svelte";
     import Modal from "./Modal.svelte";
     import CreateTaskForm from "./CreateTaskForm.svelte";
+    import SideBar from "./SideBar.svelte";
+    import CurrentTasksPage from "./CurrentTasksPage.svelte";
 
     let showCreateTaskModal = false;
 
@@ -16,10 +18,19 @@
 
 </script>
 
-<Table records={tasks} headers={headers}></Table>
+<style global lang="postcss">
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+</style>
 
-<Modal showModal={showCreateTaskModal}>
-    <CreateTaskForm on:createTask={handleCreateTask}></CreateTaskForm>
+<div class="flex flex-row">
+    <SideBar></SideBar>
+    <CurrentTasksPage></CurrentTasksPage>
+</div>
+
+<!--<Modal showModal={showCreateTaskModal}>
+    <CreateTaskForm on:createTask={handleCreateTask} on:cancel={() => showCreateTaskModal = false}></CreateTaskForm>
 </Modal>
 
-<button on:click={() => showCreateTaskModal = true}>Create Task</button>
+<button on:click={() => showCreateTaskModal = true}>+</button>-->

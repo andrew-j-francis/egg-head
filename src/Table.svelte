@@ -9,7 +9,6 @@
     .table-container {
         margin: 2rem;
         padding: 3rem;
-        background: var(--surface);
         border-radius: 25px;
     }
 
@@ -27,6 +26,10 @@
     .table-row:hover {
         background: gray;
     }
+
+    button {
+        padding: .25rem;
+    }
 </style>
 
 <div class="table-container">
@@ -41,6 +44,9 @@
                 {#each Object.entries(record) as [header, value]}
                     <td>{value}</td>
                 {/each}
+                <td>
+                    <button>Delete</button>
+                </td>
             </tr>
         {/each}
     </table>

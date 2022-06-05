@@ -43,6 +43,7 @@
         taskStartDate = currentDate;
         taskEndDate = currentDate;
     }
+
 </script>
 
 <form on:submit={createTask}>
@@ -66,6 +67,6 @@
     <label for="five">Is Five Minutes?</label>
     <input id="five" type="checkbox" bind:checked={taskFive}>
 
-    <button on:click={() => showTaskModal = false}>Cancel</button>
+    <button on:click={() => dispatch('cancel')}>Cancel</button>
     <button type="submit">Create</button>
 </form>
