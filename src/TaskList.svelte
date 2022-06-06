@@ -1,16 +1,10 @@
 <script lang="ts">
-
     import TaskListItem from "./TaskListItem.svelte";
+    import {tasks} from './stores.js';
 </script>
 
 <div class="flex flex-col w-full overflow-scroll">
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
-    <TaskListItem></TaskListItem>
+    {#each $tasks as task}
+        <TaskListItem task={task}></TaskListItem>
+    {/each}
 </div>

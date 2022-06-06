@@ -2,52 +2,10 @@
     export let showModal = false;
 </script>
 
-<style>
-    .modal-container {
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0); /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        display: block;
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: var(--surface);
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-    }
-
-    /* The Close Button */
-    .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-</style>
-
 {#if showModal}
-
-    <div class="modal-container">
-        <div class="modal-content">
+    <div class="flex flex-col items-center fixed h-screen w-full z-10">
+        <div class="text-gray-50 bg-gray-800 m-auto p-5 border-2 border-gray-600 w-1/5 z-20">
             <slot></slot>
         </div>
     </div>
-
 {/if}

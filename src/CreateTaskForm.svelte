@@ -1,14 +1,16 @@
 <script lang="ts">
     import {onMount} from "svelte";
     import {createEventDispatcher} from 'svelte';
+    import {tasks} from './stores.js';
+    import TextInput from "./TextInput.svelte";
+    import DateInput from "./DateInput.svelte";
+    import CheckboxInput from "./CheckboxInput.svelte";
+    import Button from "./Button.svelte";
 
     const dispatch = createEventDispatcher();
 
-    let showTaskModal = false;
-
     let taskName = "";
-    let taskStatus = "";
-    let taskFive = false;
+    let isQuickTask = false;
     let taskStartDate = "";
     let taskEndDate = "";
     let currentDate = "";
@@ -26,47 +28,42 @@
     });
 
     function createTask() {
-        dispatch('createTask', {
-            task: {
-                name: taskName,
-                status: taskStatus,
-                five: taskFive,
-                startDate: taskStartDate,
-                endDate: taskEndDate
-            }
-        });
-
+        closeModal();
+        $tasks = [...$tasks, {
+            name: taskName,
+            isQuickTask: isQuickTask,
+            startDate: taskStartDate,
+            endDate: taskEndDate
+        }]
 
         taskName = "";
-        taskStatus = "";
-        taskFive = false;
+        isQuickTask = false;
         taskStartDate = currentDate;
         taskEndDate = currentDate;
     }
 
+    function closeModal() {
+        dispatch('closeModal');
+    }
+
 </script>
 
-<form on:submit={createTask}>
+<form on:submit|preventDefault={createTask}>
 
-    <label for="task-name">Task Name</label>
-    <input id="task-name" type="text" bind:value={taskName} required>
+    <TextInput placeholder="Enter Task Name" bind:value={taskName} label="Task Name" required={true}></TextInput>
 
-    <label for="status">Status</label>
-    <select id="status" bind:value={taskStatus}>
-        <option value="New">New</option>
-        <option value="In Progress">In Progress</option>
-        <option value="Done">Done</option>
-    </select>
+    <DateInput bind:value={taskStartDate} label="Task Start Date"></DateInput>
+    <DateInput bind:value={taskEndDate} label="Task End Date"></DateInput>
 
-    <label for="start-date">Start Date</label>
-    <input id="start-date" type="date" bind:value={taskStartDate}>
+    <CheckboxInput bind:value={isQuickTask} label="Is QuickTask?"></CheckboxInput>
+    <div class="flex flex-row mt-5">
+        <div class="flex-none">
+            <Button type="button" label="Cancel" on:click={closeModal}></Button>
+        </div>
+        <div class="grow w-full"></div>
+        <div class="flex-none">
+            <Button type="submit" label="Create"></Button>
+        </div>
 
-    <label for="end-date">End Date</label>
-    <input id="end-date" type="date" bind:value={taskEndDate}>
-
-    <label for="five">Is Five Minutes?</label>
-    <input id="five" type="checkbox" bind:checked={taskFive}>
-
-    <button on:click={() => dispatch('cancel')}>Cancel</button>
-    <button type="submit">Create</button>
+    </div>
 </form>
