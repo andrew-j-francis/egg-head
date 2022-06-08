@@ -1,13 +1,7 @@
 <script lang="ts">
     import SideBar from "./SideBar.svelte";
     import CurrentTasksPage from "./CurrentTasksPage.svelte";
-    import {onMount} from "svelte";
-    import {tasks} from './stores.js';
-
-    onMount(() => {
-        console.log($tasks);
-    });
-
+    import getTasks from "./TaskManager";
 </script>
 
 <style global lang="postcss">

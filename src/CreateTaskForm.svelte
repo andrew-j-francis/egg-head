@@ -1,34 +1,22 @@
 <script lang="ts">
-    import {onMount} from "svelte";
     import {createEventDispatcher} from 'svelte';
     import {tasks} from './stores.js';
     import TextInput from "./TextInput.svelte";
     import DateInput from "./DateInput.svelte";
     import CheckboxInput from "./CheckboxInput.svelte";
     import Button from "./Button.svelte";
+    import {getCurrentDate} from './Date.js';
 
     const dispatch = createEventDispatcher();
 
     let taskName = "";
     let isQuickTask = false;
-    let taskStartDate = "";
-    let taskEndDate = "";
-    let currentDate = "";
-
-    onMount(async () => {
-        let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
-        let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        let yyyy = today.getFullYear();
-
-        currentDate = yyyy + '-' + mm + '-' + dd;
-
-        taskStartDate = currentDate;
-        taskEndDate = currentDate;
-    });
+    let taskStartDate = getCurrentDate();
+    let taskEndDate = getCurrentDate();
 
     function createTask() {
         closeModal();
+
         $tasks = [...$tasks, {
             name: taskName,
             isQuickTask: isQuickTask,
@@ -38,8 +26,8 @@
 
         taskName = "";
         isQuickTask = false;
-        taskStartDate = currentDate;
-        taskEndDate = currentDate;
+        taskStartDate = getCurrentDate();
+        taskEndDate = getCurrentDate();
     }
 
     function closeModal() {
