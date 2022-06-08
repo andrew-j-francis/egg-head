@@ -11,7 +11,6 @@
     let showEditTaskModal = false;
 
     function handleClick() {
-        console.log('handleClick');
         showEditTaskModal = true;
     }
 </script>

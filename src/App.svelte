@@ -1,7 +1,12 @@
 <script lang="ts">
     import SideBar from "./SideBar.svelte";
     import CurrentTasksPage from "./CurrentTasksPage.svelte";
-    import getTasks from "./TaskManager";
+    import {onMount} from "svelte";
+    import {getTasksFromFile} from "./TaskInterface.ts";
+
+    onMount(() => {
+        getTasksFromFile();
+    });
 </script>
 
 <style global lang="postcss">
