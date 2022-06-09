@@ -5,17 +5,20 @@ windows_subsystem = "windows"
 
 use std::fs::File;
 use std::io::{ErrorKind, Read, Write};
+use std::ops::{Deref, DerefMut};
+use std::sync::Mutex;
 use serde::{Serialize, Deserialize};
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_tasks, save_tasks])
+        .manage(TaskList(Default::default()))
+        .invoke_handler(tauri::generate_handler![get_tasks, create_task])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 #[tauri::command]
-fn get_tasks() -> Vec<Task> {
+fn get_tasks(task_list_state: tauri::State<TaskList>) -> Vec<Task> {
     println!("Get Tasks");
 
     let tasks_file = File::open("tasks.txt");
@@ -45,16 +48,21 @@ fn get_tasks() -> Vec<Task> {
 
     println!("contents");
     println!("{}", contents);
-    let returned_contents: Vec<Task> = match serde_json::from_str(&*contents) {
+    let mut task_array: Vec<Task> = match serde_json::from_str(&*contents) {
         Ok(tasks) => { tasks }
         Err(error) => { panic!("Could not convert file contents to json: {}", error) }
     };
 
-    return returned_contents;
+    let mut test = task_list_state.0.lock().expect("fuck");
+    *test = task_array;
+
+    return Vec::new();
 }
 
 #[tauri::command]
-fn save_tasks(task_list: String) {}
+fn create_task(task_list_state: tauri::State<'_, TaskList>) {
+    //println!("Test 2: {}", task_list_state.0.lock().unwrap());
+}
 
 #[derive(Serialize, Deserialize, Debug)]
 struct Task {
@@ -65,3 +73,5 @@ struct Task {
     start_date: String,
     end_date: String,
 }
+
+struct TaskList(Mutex<Vec<Task>>);

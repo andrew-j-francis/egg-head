@@ -1,10 +1,10 @@
 import {invoke} from '@tauri-apps/api/tauri'
-import {tasks} from './stores.js';
 
 //get tasks from rust
 //set tasks store to return list
 export function getTasksFromFile() {
     invoke('get_tasks').then((taskList) => console.log(taskList))
+    invoke('create_task');
 }
 
 //pass task values to rust
