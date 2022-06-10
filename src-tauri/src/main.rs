@@ -5,20 +5,19 @@ windows_subsystem = "windows"
 
 use std::fs::File;
 use std::io::{ErrorKind, Read, Write};
-use std::ops::{Deref, DerefMut};
-use std::sync::Mutex;
+use std::sync::{Mutex};
 use serde::{Serialize, Deserialize};
 
 fn main() {
     tauri::Builder::default()
         .manage(TaskList(Default::default()))
-        .invoke_handler(tauri::generate_handler![get_tasks, create_task])
+        .invoke_handler(tauri::generate_handler![get_tasks_from_file, create_task])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
 
 #[tauri::command]
-fn get_tasks(task_list_state: tauri::State<TaskList>) -> Vec<Task> {
+fn get_tasks_from_file(task_list_state: tauri::State<TaskList>) -> Vec<Task> {
     println!("Get Tasks");
 
     let tasks_file = File::open("tasks.txt");
@@ -46,25 +45,35 @@ fn get_tasks(task_list_state: tauri::State<TaskList>) -> Vec<Task> {
     };
 
 
-    println!("contents");
-    println!("{}", contents);
-    let mut task_array: Vec<Task> = match serde_json::from_str(&*contents) {
+    let mut state = task_list_state.0.lock().expect("failed to retrieve task list");
+
+    *state = match serde_json::from_str(&*contents) {
         Ok(tasks) => { tasks }
         Err(error) => { panic!("Could not convert file contents to json: {}", error) }
     };
 
-    let mut test = task_list_state.0.lock().expect("fuck");
-    *test = task_array;
-
-    return Vec::new();
+    return (*state).clone();
 }
 
 #[tauri::command]
-fn create_task(task_list_state: tauri::State<'_, TaskList>) {
-    //println!("Test 2: {}", task_list_state.0.lock().unwrap());
+fn create_task(task: Task, task_list_state: tauri::State<'_, TaskList>) -> Vec<Task> {
+    let mut state = task_list_state.0.lock().unwrap();
+
+    let new_task = Task {
+        id: task.id,
+        name: task.name,
+        status: task.status,
+        is_quick_task: task.is_quick_task,
+        start_date: task.start_date,
+        end_date: task.end_date,
+    };
+
+    (*state).push(new_task);
+
+    (*state).clone()
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 struct Task {
     id: String,
     name: String,

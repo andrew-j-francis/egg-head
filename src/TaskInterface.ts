@@ -1,20 +1,12 @@
 import {invoke} from '@tauri-apps/api/tauri'
+import {tasks} from './stores.js';
 
-//get tasks from rust
-//set tasks store to return list
 export function getTasksFromFile() {
-    invoke('get_tasks').then((taskList) => console.log(taskList))
-    invoke('create_task');
+    invoke('get_tasks_from_file').then((taskList) => tasks.set(taskList))
 }
 
-//pass task values to rust
-//rust creates task object and id and adds to list
-//rust overwrites file with new list
-//rust returns task list
-//js sets tasks store to returned list
-export function createTask() {
-    //append task to svelte store
-    //call rust to  save task to file
+export function createNewTask(newTask) {
+    invoke('create_task', {task: newTask}).then((taskList) => tasks.set(taskList));
 }
 
 //pass task id to rust

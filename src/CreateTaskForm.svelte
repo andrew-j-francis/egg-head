@@ -1,11 +1,12 @@
 <script lang="ts">
     import {createEventDispatcher} from 'svelte';
-    import {tasks} from './stores.js';
     import TextInput from "./TextInput.svelte";
     import DateInput from "./DateInput.svelte";
     import CheckboxInput from "./CheckboxInput.svelte";
     import Button from "./Button.svelte";
     import {getCurrentDate} from './Date.js';
+    import {createNewTask} from "./TaskInterface";
+    import {tasks} from './stores.js';
 
     const dispatch = createEventDispatcher();
 
@@ -15,19 +16,24 @@
     let taskEndDate = getCurrentDate();
 
     function createTask() {
-        closeModal();
 
-        $tasks = [...$tasks, {
+        let newTask = {
+            id: '1',
             name: taskName,
-            isQuickTask: isQuickTask,
-            startDate: taskStartDate,
-            endDate: taskEndDate
-        }]
+            status: 'Done',
+            is_quick_task: isQuickTask,
+            start_date: taskStartDate,
+            end_date: taskEndDate
+        };
+        console.log(newTask);
+
+        createNewTask(newTask);
 
         taskName = "";
         isQuickTask = false;
         taskStartDate = getCurrentDate();
         taskEndDate = getCurrentDate();
+        closeModal();
     }
 
     function closeModal() {
