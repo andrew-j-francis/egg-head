@@ -6,7 +6,7 @@
     import Button from "./Button.svelte";
     import {getCurrentDate} from './Date.js';
     import {createNewTask} from "./TaskInterface";
-    import {tasks} from './stores.js';
+    import {v4 as uuidv4} from 'uuid';
 
     const dispatch = createEventDispatcher();
 
@@ -18,14 +18,13 @@
     function createTask() {
 
         let newTask = {
-            id: '1',
+            id: uuidv4(),
             name: taskName,
             status: 'Done',
             is_quick_task: isQuickTask,
             start_date: taskStartDate,
             end_date: taskEndDate
         };
-        console.log(newTask);
 
         createNewTask(newTask);
 

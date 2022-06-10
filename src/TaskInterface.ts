@@ -6,13 +6,16 @@ export function getTasksFromFile() {
 }
 
 export function createNewTask(newTask) {
-    invoke('create_task', {task: newTask}).then((taskList) => tasks.set(taskList));
+    invoke('create_task', {task: newTask}).then((taskList) => {
+        tasks.set(taskList);
+        saveTasks();
+    });
 }
 
-//pass task id to rust
-//rust deletes task from list and file
-//rust returns list
-//js sets tasks store to returned list
+export function saveTasks() {
+    invoke('save_tasks_to_file');
+}
+
 export function deleteTask() {
 }
 
