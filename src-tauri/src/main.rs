@@ -97,6 +97,21 @@ fn save_tasks_to_file(task_list_state: tauri::State<TaskList>) {
     file.write_all("]".as_bytes()).unwrap();
 }
 
+#[tauri::command]
+fn edit_task(task_to_edit: Task, task_list_state: tauri::State<TaskList>) {
+    let mut task_list = task_list_state.0.lock().unwrap();
+
+    //let mut task: &mut Task = (*task_list).first_mut().unwrap();
+    //task.name = task_to_edit.name;
+
+    for task in &mut *task_list {
+        //task_name = task_to_edit.name;
+    }
+}
+
+#[tauri::command]
+fn delete_task() {}
+
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct Task {
     id: String,
