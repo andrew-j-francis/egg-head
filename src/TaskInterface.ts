@@ -16,8 +16,12 @@ export function saveTasks() {
     invoke('save_tasks_to_file');
 }
 
-export function deleteTask() {
+export function deleteTask(deletedTask) {
 }
 
-export function editTask() {
+export function editTask(editedTask) {
+    invoke('edit_task', {edited_task: editedTask}).then((taskList) => {
+        tasks.set(taskList);
+        saveTasks();
+    });
 }

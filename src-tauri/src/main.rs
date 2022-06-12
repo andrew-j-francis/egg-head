@@ -98,15 +98,26 @@ fn save_tasks_to_file(task_list_state: tauri::State<TaskList>) {
 }
 
 #[tauri::command]
-fn edit_task(task_to_edit: Task, task_list_state: tauri::State<TaskList>) {
+fn edit_task(edited_task: Task, task_list_state: tauri::State<TaskList>) -> Vec<Task> {
     let mut task_list = task_list_state.0.lock().unwrap();
 
-    //let mut task: &mut Task = (*task_list).first_mut().unwrap();
-    //task.name = task_to_edit.name;
+    let name = &(&edited_task).name;
+    let status = &(&edited_task).status;
+    let is_quick_task = &(&edited_task).is_quick_task;
+    let start_date = &(&edited_task).start_date;
+    let end_date = &(&edited_task).end_date;
 
     for task in &mut *task_list {
-        //task_name = task_to_edit.name;
+        if task.id == edited_task.id {
+            task.name = name.to_string();
+            task.status = status.to_string();
+            task.is_quick_task = *is_quick_task;
+            task.start_date = start_date.to_string();
+            task.end_date = end_date.to_string();
+        }
     }
+
+    return (*task_list).clone();
 }
 
 #[tauri::command]
