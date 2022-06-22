@@ -5,6 +5,8 @@
 
 <div class="flex flex-col w-full overflow-scroll">
     {#each $tasks as task}
-        <TaskListItem task={task}></TaskListItem>
+        {#if task.current_status !== "Completed"}
+            <TaskListItem task={task}></TaskListItem>
+        {/if}
     {/each}
 </div>

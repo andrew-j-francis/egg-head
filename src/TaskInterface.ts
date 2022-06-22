@@ -19,8 +19,16 @@ export function saveTasks() {
 export function deleteTask(deletedTask) {
 }
 
+export function completeTask(completedTask) {
+    invoke('complete_task', {completedTask: completedTask}).then((taskList) => {
+        tasks.set(taskList);
+        saveTasks();
+    })
+}
+
 export function editTask(editedTask) {
-    invoke('edit_task', {edited_task: editedTask}).then((taskList) => {
+    console.log("interface edit");
+    invoke('edit_task', {editedTask: editedTask}).then((taskList) => {
         tasks.set(taskList);
         saveTasks();
     });
