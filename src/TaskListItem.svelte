@@ -19,6 +19,10 @@
         completeTask(task);
     }
 
+    function handleDeleteTask() {
+        //delete task
+    }
+
 </script>
 
 <div on:dblclick={handleClick}
@@ -48,6 +52,8 @@
             <div class="bg-blue-800 rounded-full m-1 p-3 max-w-max">Quick Task</div>
         </div>
     {/if}
+
+    <button class="text-gray-900 hover:text-gray-700" on:click={handleDeleteTask}>X</button>
 </div>
 
 
