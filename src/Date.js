@@ -6,3 +6,9 @@ export const getCurrentDate = () => {
 
     return yyyy + '-' + mm + '-' + dd;
 }
+
+export const checkStartDate = (taskStartDate) => {
+    console.log(getCurrentDate());
+    console.log(taskStartDate);
+    return true;
+}
