@@ -17,6 +17,10 @@ export function saveTasks() {
 }
 
 export function deleteTask(deletedTask) {
+    invoke('delete_task', {deletedTask: deletedTask}).then((taskList) => {
+        tasks.set(taskList);
+        saveTasks();
+    })
 }
 
 export function completeTask(completedTask) {

@@ -13,7 +13,7 @@ use std::path::Path;
 fn main() {
     tauri::Builder::default()
         .manage(TaskList(Default::default()))
-        .invoke_handler(tauri::generate_handler![get_tasks_from_file, create_task, save_tasks_to_file, edit_task, complete_task])
+        .invoke_handler(tauri::generate_handler![get_tasks_from_file, create_task, save_tasks_to_file, edit_task, complete_task, delete_task])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -150,7 +150,14 @@ fn complete_task(completed_task: Task, task_list_state: tauri::State<TaskList>) 
 }
 
 #[tauri::command]
-fn delete_task() {}
+fn delete_task(deleted_task: Task, task_list_state: tauri::State<TaskList>) -> Vec<Task> {
+    let mut task_list = task_list_state.0.lock().unwrap();
+
+    let index = task_list.iter().position(|x| (*x).id == deleted_task.id).unwrap();
+    task_list.remove(index);
+
+    return (*task_list).clone();
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct Task {

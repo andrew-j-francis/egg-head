@@ -2,7 +2,7 @@
     import {getCurrentDate} from './Date.js';
     import Modal from "./Modal.svelte";
     import EditTaskForm from "./EditTaskForm.svelte";
-    import {completeTask} from "./TaskInterface.ts";
+    import {completeTask, deleteTask} from "./TaskInterface.ts";
 
     export let task;
 
@@ -20,7 +20,7 @@
     }
 
     function handleDeleteTask() {
-        //delete task
+        deleteTask(task);
     }
 
 </script>
@@ -53,8 +53,8 @@
         </div>
     {/if}
 
-    <button class="text-gray-800 hover:bg-gray-500 border-gray-50 bg-gray-600 rounded-full" on:click={handleDeleteTask}>
-        Delete
+    <button class="text-gray-700 hover:text-gray-500 text-2xl ml-5" on:click={handleDeleteTask}>
+        X
     </button>
 </div>
 

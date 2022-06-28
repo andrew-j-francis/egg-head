@@ -20,7 +20,7 @@
         let newTask = {
             id: uuidv4(),
             name: taskName,
-            current_status: 'New',
+            current_status: 'Active',
             is_quick_task: isQuickTask,
             start_date: taskStartDate,
             end_date: taskEndDate
