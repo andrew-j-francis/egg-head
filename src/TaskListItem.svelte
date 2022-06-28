@@ -53,7 +53,9 @@
         </div>
     {/if}
 
-    <button class="text-gray-900 hover:text-gray-700" on:click={handleDeleteTask}>X</button>
+    <button class="text-gray-800 hover:bg-gray-500 border-gray-50 bg-gray-600 rounded-full" on:click={handleDeleteTask}>
+        Delete
+    </button>
 </div>
 
 
